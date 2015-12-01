@@ -1918,6 +1918,11 @@ cleanup:
 	
 	if (![[NSThread currentThread] isEqual:internalThread])
 	{
+		if (state == AS_WAITING_FOR_QUEUE_TO_START){
+            		@synchronized(self){
+                		self.state = AS_PLAYING;
+            		}
+        	}
 		[self
 			performSelector:@selector(handlePropertyChange:)
 			onThread:internalThread
